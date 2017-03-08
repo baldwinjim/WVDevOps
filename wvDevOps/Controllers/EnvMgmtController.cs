@@ -12,14 +12,15 @@ namespace wvDevOps.Controllers
     public class EnvMgmtController : Controller
     {
         // GET: EnvMgmt
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             ConsulWV myconsul = new ConsulWV();
 
-            bool x = myconsul.putConsul("Dummy", "QA Environment").GetAwaiter().GetResult();
+            var result = await myconsul.putConsul("Dummy", "QA Environment");
 
-            return Content(x.ToString());
-            //return View();
+            ViewBag.ConsulResult = result.ToString();
+
+            return View(result);
         }
     }
 }
