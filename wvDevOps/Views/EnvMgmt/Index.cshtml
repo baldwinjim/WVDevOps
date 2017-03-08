@@ -1,10 +1,14 @@
-﻿@model bool?
-
-@{
+﻿@{
     ViewBag.Title = "Environment Management";
 }
 
 <h2>Environment Management</h2>
 
-@Model
+<ul>
 
+@foreach (string val in ViewBag.ConsulResult)
+{ 
+    <li>@val.ToString()</li>
+    
+}
+</ul>

@@ -43,11 +43,29 @@ namespace wvDevOps.Helpers
             }
         }
 
-        public bool PutPairs(string key, string value)
+        public async Task<string>getPair(string key)
         {
-            bool x = putConsul(key, value).GetAwaiter().GetResult();
+            var getPair = await consulClient.KV.Get(key);
+            return Encoding.UTF8.GetString(getPair.Response.Value, 0, getPair.Response.Value.Length);
+        }
 
-            return x; 
+        public async Task<List<string>> getEnvironments(string key)
+        {
+            var getList = await consulClient.KV.Keys(key);
+            List<String> values = new List<string>();
+            foreach (string val in getList.Response)
+            {
+                string[] env = val.Split('/');
+                if (!values.Contains(env[1]))
+                {
+                    values.Add(env[1]);
+                }
+                
+            };
+           
+          
+            return values;
+
         }
     }
 }

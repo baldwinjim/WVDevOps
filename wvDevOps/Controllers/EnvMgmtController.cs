@@ -16,11 +16,12 @@ namespace wvDevOps.Controllers
         {
             ConsulWV myconsul = new ConsulWV();
 
-            var result = await myconsul.putConsul("Dummy", "QA Environment");
+            //var result = await myconsul.putConsul("Dummy", "QA Environment");
+            var result = await myconsul.getEnvironments("environments");
 
-            ViewBag.ConsulResult = result.ToString();
+            ViewBag.ConsulResult = result;
 
-            return View(result);
+            return View();
         }
     }
 }
