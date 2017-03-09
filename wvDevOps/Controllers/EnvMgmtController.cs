@@ -23,5 +23,11 @@ namespace wvDevOps.Controllers
 
             return View();
         }
+
+        public ActionResult New()
+        {
+            return View();
+        }
     }
+
 }

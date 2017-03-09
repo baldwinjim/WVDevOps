@@ -4,11 +4,14 @@
 
 <h2>Environment Management</h2>
 
-<ul>
+<div style="font-family :Arial">
+    <p>Environments</p>
+    @foreach (string val in ViewBag.ConsulResult)
+    {
+        @Html.ActionLink(val.ToString(), "Edit", new { env = val.ToString() })
+        <br />
+    }
+    <br />
+    <p>@Html.ActionLink("New Environment", "New")</p>
 
-@foreach (string val in ViewBag.ConsulResult)
-{ 
-    <li>@val.ToString()</li>
-    
-}
-</ul>
+</div>
