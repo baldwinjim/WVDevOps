@@ -17,12 +17,12 @@ namespace wvDevOps.Helpers
         public ConsulWV()
         {
             Uri consulUrl = new System.Uri(WebConfigurationManager.AppSettings["Consul"]);
-            var clientConfig = new ConsulClientConfiguration()
-            {
-                Address = consulUrl
-            };
+            //var clientConfig = new ConsulClientConfiguration()
+            //{
+            //    Address = consulUrl
+            //};
 
-            consulClient = new ConsulClient(clientConfig);
+            consulClient = new ConsulClient((c) => { c.Address = consulUrl; });
         }
 
        public async Task<bool> putConsul(string key, string value)
@@ -53,16 +53,23 @@ namespace wvDevOps.Helpers
         {
             var getList = await consulClient.KV.Keys(key);
             List<String> values = new List<string>();
-            foreach (string val in getList.Response)
+            if (getList.Response != null)
             {
-                string[] env = val.Split('/');
-                if (!values.Contains(env[1]))
-                {
-                    values.Add(env[1]);
-                }
                 
-            };
-           
+                foreach (string val in getList.Response)
+                {
+                    string[] env = val.Split('/');
+                    if (!values.Contains(env[1]))
+                    {
+                        values.Add(env[1]);
+                    }
+
+                };
+            }
+            else
+            {
+                values = null;
+            }
           
             return values;
 

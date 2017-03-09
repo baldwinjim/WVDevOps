@@ -6,10 +6,17 @@
 
 <div style="font-family :Arial">
     <p>Environments</p>
-    @foreach (string val in ViewBag.ConsulResult)
+    @if (ViewBag.ConsulResult != null)
     {
-        @Html.ActionLink(val.ToString(), "Edit", new { env = val.ToString() })
-        <br />
+        foreach (string val in ViewBag.ConsulResult)
+        {
+            @Html.ActionLink(val.ToString(), "Edit", new { env = val.ToString() })
+            <br />
+        }
+    }
+    else
+    {
+        <h3>No environments exist!</h3>
     }
     <br />
     <p>@Html.ActionLink("New Environment", "New")</p>
