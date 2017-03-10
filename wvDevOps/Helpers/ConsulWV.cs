@@ -25,7 +25,25 @@ namespace wvDevOps.Helpers
             consulClient = new ConsulClient((c) => { c.Address = consulUrl; });
         }
 
-       public async Task<bool> putConsul(string key, string value)
+        public async Task<bool> putFolder(string key)
+        {
+            var putPair = new KVPair(key)
+            {
+                Value = null
+            };
+
+            var putAttempt = await consulClient.KV.Put(putPair);
+            if (putAttempt.Response)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> putConsul(string key, string value)
         {
             var putPair = new KVPair(key)
             {
@@ -55,15 +73,17 @@ namespace wvDevOps.Helpers
             List<String> values = new List<string>();
             if (getList.Response != null)
             {
-                
+
                 foreach (string val in getList.Response)
                 {
                     string[] env = val.Split('/');
-                    if (!values.Contains(env[1]))
+                    if (env[1] != "")
                     {
-                        values.Add(env[1]);
+                        if (!values.Contains(env[1]))
+                        {
+                            values.Add(env[1]);
+                        }
                     }
-
                 };
             }
             else
