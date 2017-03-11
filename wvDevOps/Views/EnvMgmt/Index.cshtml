@@ -10,7 +10,7 @@
     {
         foreach (string val in ViewBag.ConsulResult)
         {
-            @Html.ActionLink(val.ToString(), "Edit", new { env = val.ToString() })
+            @Html.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() })
             <br />
         }
     }

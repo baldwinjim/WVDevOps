@@ -46,6 +46,14 @@
         </div>
 
         <div class="form-group">
+            @Html.Label("protected", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.protectedEnv)
+                @Html.ValidationMessageFor(model => model.protectedEnv, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Add" class="btn btn-default" />
             </div>

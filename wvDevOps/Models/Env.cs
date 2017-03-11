@@ -10,6 +10,8 @@ namespace wvDevOps.Models
         public string name { get; set; }
         public string vpc_cidr { get; set; }
         public string aws_region { get; set; }
+        public bool protectedEnv { get; set; }
+
     }
 
 }

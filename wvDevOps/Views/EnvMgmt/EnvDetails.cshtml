@@ -1,0 +1,53 @@
+﻿@model wvDevOps.Models.Env
+
+@{
+    ViewBag.Title = "Environment Details";
+}
+
+@Html.Label(Model.name)
+
+<h2>Environment Details</h2>
+
+<div>
+    <h4>Environment Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.vpc_cidr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.vpc_cidr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.aws_region)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.aws_region)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.protectedEnv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.protectedEnv)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink("Built It", "EnvBuild", new { name = Model.name })
+</p>
