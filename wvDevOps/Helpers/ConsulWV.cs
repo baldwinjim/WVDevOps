@@ -17,11 +17,6 @@ namespace wvDevOps.Helpers
         public ConsulWV()
         {
             Uri consulUrl = new System.Uri(WebConfigurationManager.AppSettings["Consul"]);
-            //var clientConfig = new ConsulClientConfiguration()
-            //{
-            //    Address = consulUrl
-            //};
-
             consulClient = new ConsulClient((c) => { c.Address = consulUrl; });
         }
 

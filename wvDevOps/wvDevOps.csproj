@@ -51,14 +51,6 @@
       <HintPath>..\packages\Consul.0.7.2.1\lib\net45\Consul.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Jenkins.Core, Version=2.1.2.22051, Culture=neutral, PublicKeyToken=2f531e0c1c11a32b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Jenkins.Core.2.1.2.22051\lib\net45\Jenkins.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Jenkins.Domain, Version=2.1.1.22017, Culture=neutral, PublicKeyToken=2f531e0c1c11a32b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Jenkins.Domain.2.1.1.22017\lib\net45\Jenkins.Domain.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -149,7 +141,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Class1.cs" />
     <Compile Include="Helpers\ConsulWV.cs" />
+    <Compile Include="Helpers\Jenkins.cs" />
     <Compile Include="Models\Env.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

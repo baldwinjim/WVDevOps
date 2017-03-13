@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using wvDevOps.Helpers;
-using System.Threading;
 using System.Threading.Tasks;
 using wvDevOps.Models;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Net;
+using System.Web.Script.Serialization;
 using System.Text;
-using Jenkins.Core;
+using System.IO;
 
 
 namespace wvDevOps.Controllers
@@ -31,11 +28,11 @@ namespace wvDevOps.Controllers
             TryUpdateModel(env);
             ConsulWV myconsul = new ConsulWV();
             string path = String.Format("environments/{0}/", env.name.ToLower());
-            var result = await myconsul.putFolder(path);
-            result = await myconsul.putConsul(path + "aws_region", env.aws_region);
-            result = await myconsul.putConsul(path + "vpc_cidr", env.vpc_cidr);
-            result = await myconsul.putConsul(path + "protected", env.protectedEnv.ToString());
-            result = await myconsul.putConsul(path + "updated", DateTime.Now.ToString("MM/dd/yyyy HH:mm"));
+            await myconsul.putFolder(path);
+            await myconsul.putConsul(path + "aws_region", env.aws_region);
+            await myconsul.putConsul(path + "vpc_cidr", env.vpc_cidr);
+            await myconsul.putConsul(path + "protected", env.protectedEnv.ToString());
+            await myconsul.putConsul(path + "updated", DateTime.Now.ToString("MM/dd/yyyy HH:mm"));
             return RedirectToAction("Index");
         }
 
@@ -56,26 +53,62 @@ namespace wvDevOps.Controllers
         public async Task<ActionResult> EnvBuild(string name)
         {
             ConsulWV myconsul = new ConsulWV();
-            string path = String.Format("environments/{0}/", name.ToLower());
-            var awsRegion = await myconsul.getPair(path + "aws_region");
-            var credentials = Encoding.ASCII.GetBytes("jim:Takach56");
+            Jenkins jenkins = new Jenkins();
+            string consulPath = String.Format("environments/{0}/", name.ToLower());
+            var awsRegion = await myconsul.getPair(consulPath + "aws_region");
 
-            var job = new
-            {
-                ENVIRONMENT = name,
-                AWS_REGION = awsRegion
-            };
+            List<Parameter> parameterList = new List<Parameter>();
+            parameterList.Add(new Parameter { name = "ENVIRONMENT", value = name });
+            parameterList.Add(new Parameter { name = "AWS_REGION", value = awsRegion });
 
-            HttpClient client = new HttpClient();
+            var result = await jenkins.ExecuteJob("Environment_Add", parameterList);
             
-            client.BaseAddress = new Uri("http://jenkinsapi.wvholdings.com:8080");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentials));
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var content = new StringContent(job.ToString(), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("job/Environment_Add/buildWithParameters?Token=Test1234", content);
+            //ConsulWV myconsul = new ConsulWV();
+            //string path = String.Format("environments/{0}/", name.ToLower());
+            //var awsRegion = await myconsul.getPair(path + "aws_region");
+            //string url = "http://jenkinsapi.wvholdings.com:8080/job/Environment_Add/build?Token=Test1234";
+            //string apiToken = "Takach56";
+            //string userName = "jim";
+            //string result;
 
-            return Content("Success" + response);
+            //var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+
+            //httpWebRequest.ContentType = "application/x-www-form-urlencoded";
+            //httpWebRequest.Method = "POST";
+
+            //byte[] credentialBuffer = new UTF8Encoding().GetBytes(userName + ":" + apiToken);
+
+            //httpWebRequest.Headers["Authorization"] = "Basic " + Convert.ToBase64String(credentialBuffer);
+
+            //httpWebRequest.PreAuthenticate = true;
+
+            //List<Parameter> parameterList = new List<Parameter>();
+            //parameterList.Add(new Parameter { name = "ENVIRONMENT", value = name });
+            //parameterList.Add(new Parameter { name = "AWS_REGION", value = awsRegion });
+
+            //string json = new JavaScriptSerializer().Serialize(new { parameter = parameterList.ToArray() });
+            //json = System.Web.HttpUtility.UrlEncode(json);
+
+            //using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            //{
+            //    streamWriter.Write("json=" + json);
+            //}
+            //try
+            //{
+            //    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            //    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            //    {
+            //        result = streamReader.ReadToEnd();
+            //    }
+            //}
+            //catch (WebException excp)
+            //{
+            //    using (var streamReader = new StreamReader(excp.Response.GetResponseStream()))
+            //    {
+            //        result = streamReader.ReadToEnd();
+            //    }
+            //}
+            return Content("Success" + result);
 
         }
 

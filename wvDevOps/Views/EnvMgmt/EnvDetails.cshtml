@@ -4,8 +4,6 @@
     ViewBag.Title = "Environment Details";
 }
 
-@Html.Label(Model.name)
-
 <h2>Environment Details</h2>
 
 <div>
@@ -49,5 +47,5 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     @Html.ActionLink("Back to List", "Index") |
-    @Html.ActionLink("Built It", "EnvBuild", new { name = Model.name })
+    @Html.ActionLink("Build It", "EnvBuild", new { name = Model.name })
 </p>
