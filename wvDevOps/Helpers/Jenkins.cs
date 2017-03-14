@@ -17,33 +17,26 @@ namespace wvDevOps.Helpers
         private string username { get; set; }
         private string password { get; set; }
         private string apiToken { get; set; }
+        public string jobToken { get; set; }
+
 
         public Jenkins()
         {
             jenkinsUrl = WebConfigurationManager.AppSettings["Jenkins"];
-            username = "jenkins";
-            password = "DRXDsggrCo57yF95Rzu3";
-            apiToken = "g4y92&b5NHx1";
+            username = "jenkinsapi";
+            password = "DRXDsggr";
+            apiToken = "e9e012d24842ff58cfdf044bfc048f78";
+            jobToken = "Test1234";
         }
         public async Task<string> ExecuteJob(string jobName, List<Parameter> parameters)
         {
-            string env = null;
+            //string env = null;
             ConsulWV myconsul = new ConsulWV();
-            string jenkinsPath = String.Format("job/{0}/build?Token={1}/", jobName, apiToken);
-            //for (int i; i < parameters.Count(); i++)
-            //{
-            //    if (parameters[i].name == "ENVIRONMENT")
-            //    {
-            //        env = parameters[i].value;
-            //        break;
-            //    }
-            //}
+            string jenkinsPath = String.Format("/job/{0}/build?Token={1}/", jobName, jobToken);
 
-            //string consulPath = String.Format("environments/{0}/", env);
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(jenkinsUrl);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(jenkinsUrl + jenkinsPath);
             string result;
            
-
             httpWebRequest.ContentType = "application/x-www-form-urlencoded";
             httpWebRequest.Method = "POST";
 

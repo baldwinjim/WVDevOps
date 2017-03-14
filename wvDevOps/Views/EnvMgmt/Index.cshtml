@@ -1,40 +1,47 @@
 ﻿@{
     ViewBag.Title = "Environment Management";
 }
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <h2>Environment Management</h2>
 <br />
 
-<div class="col-md-2">
+<div>
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">Environments</h3>
         </div>
         <div class="panel-body">
             <table>
-                @if (ViewBag.ConsulResult != null)
-            {
-                foreach (string val in ViewBag.ConsulResult)
-                {
-                        <tr>
-                            <td class="btn btn-link">@Html.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() })</td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td>No environments exist!</td>
-                    </tr>
-                }
                 <tr>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>@Html.ActionLink("New Environment", "AddEnv")</td>
+                    <td>
+                        <table>
+                            @if (ViewBag.ConsulResult != null)
+                            {
+                                foreach (string val in ViewBag.ConsulResult)
+                                    {
+                                    <tr>
+                                        <!-- <td class="btn btn-link">@Html.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() })</td> -->
+                                        <td>@Ajax.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "envdetails", InsertionMode = InsertionMode.Replace }) </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>No environments exist!</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td>@Html.ActionLink("New Environment", "AddEnv")</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td><div id="envdetails"></div></td>
                 </tr>
             </table>
+
         </div>
     </div>
-    </div>
-    <div class="col-lg-offset-10" id="envdetails"></div>
+</div>

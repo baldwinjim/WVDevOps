@@ -36,7 +36,7 @@ namespace wvDevOps.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> EnvDetails(string name)
+        public async Task<PartialViewResult> EnvDetails(string name)
         {
             Env env = new Env();
             ConsulWV myconsul = new ConsulWV();
@@ -46,8 +46,24 @@ namespace wvDevOps.Controllers
             env.protectedEnv = Convert.ToBoolean(await myconsul.getPair(path + "protected"));
             env.vpc_cidr = await myconsul.getPair(path + "vpc_cidr");
 
-            return View(env);
+            return PartialView("_EnvDetails", env);
 
+        }
+
+        public async Task<ActionResult> EnvDelete(string name)
+        {
+            ConsulWV myconsul = new ConsulWV();
+            Jenkins jenkins = new Jenkins();
+            string consulPath = String.Format("environments/{0}/", name.ToLower());
+            var awsRegion = await myconsul.getPair(consulPath + "aws_region");
+
+            List<Parameter> parameterList = new List<Parameter>();
+            parameterList.Add(new Parameter { name = "ENVIRONMENT", value = name });
+            parameterList.Add(new Parameter { name = "AWS_REGION", value = awsRegion });
+
+            var result = await jenkins.ExecuteJob("Environment_Delete", parameterList);
+
+            return Content("Success" + result);
         }
 
         public async Task<ActionResult> EnvBuild(string name)

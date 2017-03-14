@@ -47,5 +47,6 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     @Html.ActionLink("Back to List", "Index") |
-    @Html.ActionLink("Build It", "EnvBuild", new { name = Model.name })
+    @Html.ActionLink("Build It", "EnvBuild", new { name = Model.name }) |
+    @Html.ActionLink("Destroy It", "EnvDelete", new { name = Model.name })
 </p>

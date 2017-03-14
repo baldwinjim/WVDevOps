@@ -1,42 +1,49 @@
-﻿@model IEnumerable<wvDevOps.Models.Env>
+﻿@model wvDevOps.Models.Env
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.vpc_cidr)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.aws_region)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.protectedEnv)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.vpc_cidr)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.aws_region)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.protectedEnv)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+@{
+    ViewBag.Title = "Environment Details";
 }
+<div>
+    <h5>Environment Details</h5>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Name
+        </dt>
 
-</table>
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.vpc_cidr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.vpc_cidr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.aws_region)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.aws_region)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.protectedEnv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.protectedEnv)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink("Build It", "EnvBuild", new { name = Model.name }) |
+    @Html.ActionLink("Destroy It", "EnvDelete", new { name = Model.name })
+</p>
