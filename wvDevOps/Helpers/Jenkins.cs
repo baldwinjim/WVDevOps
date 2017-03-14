@@ -27,10 +27,19 @@ namespace wvDevOps.Helpers
         }
         public async Task<string> ExecuteJob(string jobName, List<Parameter> parameters)
         {
+            string env = null;
             ConsulWV myconsul = new ConsulWV();
             string jenkinsPath = String.Format("job/{0}/build?Token={1}/", jobName, apiToken);
-            string consulPath = String.Format("environments/{0}/", parameters);
-            // awsRegion = await myconsul.getPair(consulPath + "aws_region");
+            //for (int i; i < parameters.Count(); i++)
+            //{
+            //    if (parameters[i].name == "ENVIRONMENT")
+            //    {
+            //        env = parameters[i].value;
+            //        break;
+            //    }
+            //}
+
+            //string consulPath = String.Format("environments/{0}/", env);
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(jenkinsUrl);
             string result;
            
@@ -41,12 +50,7 @@ namespace wvDevOps.Helpers
             byte[] credentialBuffer = new UTF8Encoding().GetBytes(username + ":" + apiToken);
 
             httpWebRequest.Headers["Authorization"] = "Basic " + Convert.ToBase64String(credentialBuffer);
-
             httpWebRequest.PreAuthenticate = true;
-
-            //List<Parameter> parameterList = new List<Parameter>();
-            //parameterList.Add(new Parameter { name = "ENVIRONMENT", value = name });
-            //parameterList.Add(new Parameter { name = "AWS_REGION", value = awsRegion });
 
             string json = new JavaScriptSerializer().Serialize(new { parameter = parameters.ToArray() });
             json = System.Web.HttpUtility.UrlEncode(json);

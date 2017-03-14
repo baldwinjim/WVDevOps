@@ -63,51 +63,6 @@ namespace wvDevOps.Controllers
 
             var result = await jenkins.ExecuteJob("Environment_Add", parameterList);
             
-            //ConsulWV myconsul = new ConsulWV();
-            //string path = String.Format("environments/{0}/", name.ToLower());
-            //var awsRegion = await myconsul.getPair(path + "aws_region");
-            //string url = "http://jenkinsapi.wvholdings.com:8080/job/Environment_Add/build?Token=Test1234";
-            //string apiToken = "Takach56";
-            //string userName = "jim";
-            //string result;
-
-            //var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-
-            //httpWebRequest.ContentType = "application/x-www-form-urlencoded";
-            //httpWebRequest.Method = "POST";
-
-            //byte[] credentialBuffer = new UTF8Encoding().GetBytes(userName + ":" + apiToken);
-
-            //httpWebRequest.Headers["Authorization"] = "Basic " + Convert.ToBase64String(credentialBuffer);
-
-            //httpWebRequest.PreAuthenticate = true;
-
-            //List<Parameter> parameterList = new List<Parameter>();
-            //parameterList.Add(new Parameter { name = "ENVIRONMENT", value = name });
-            //parameterList.Add(new Parameter { name = "AWS_REGION", value = awsRegion });
-
-            //string json = new JavaScriptSerializer().Serialize(new { parameter = parameterList.ToArray() });
-            //json = System.Web.HttpUtility.UrlEncode(json);
-
-            //using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            //{
-            //    streamWriter.Write("json=" + json);
-            //}
-            //try
-            //{
-            //    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            //    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            //    {
-            //        result = streamReader.ReadToEnd();
-            //    }
-            //}
-            //catch (WebException excp)
-            //{
-            //    using (var streamReader = new StreamReader(excp.Response.GetResponseStream()))
-            //    {
-            //        result = streamReader.ReadToEnd();
-            //    }
-            //}
             return Content("Success" + result);
 
         }
