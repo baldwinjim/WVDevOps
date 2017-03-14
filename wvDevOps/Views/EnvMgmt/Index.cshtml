@@ -3,7 +3,7 @@
 }
 
 <h2>Environment Management</h2>
-
+<br />
 
 <div class="col-md-2">
     <div class="panel panel-primary">
@@ -11,13 +11,13 @@
             <h3 class="panel-title">Environments</h3>
         </div>
         <div class="panel-body">
-            <table class="table table-striped table-hover">
+            <table>
                 @if (ViewBag.ConsulResult != null)
             {
                 foreach (string val in ViewBag.ConsulResult)
                 {
                         <tr>
-                            <td align="center" class="class=" btn btn-link">@Html.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() }, new { style = "text-docration:none;" })</td>
+                            <td class="btn btn-link">@Html.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() })</td>
                         </tr>
                     }
                 }
@@ -27,10 +27,14 @@
                         <td>No environments exist!</td>
                     </tr>
                 }
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>@Html.ActionLink("New Environment", "AddEnv")</td>
+                </tr>
             </table>
         </div>
     </div>
     </div>
-    <div style="font-family :Arial">
-        <p>@Html.ActionLink("New Environment", "AddEnv")</p>
-    </div>
+    <div class="col-lg-offset-10" id="envdetails"></div>
