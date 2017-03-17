@@ -43,6 +43,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.Core.3.3.10.1\lib\net45\AWSSDK.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AWSSDK.EC2, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.EC2.3.3.11.3\lib\net45\AWSSDK.EC2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
       <Private>True</Private>
@@ -104,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-cosmo.css" />
+    <Content Include="Content\bootstrap-flatly.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap-orig.css" />
@@ -149,6 +158,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AwsWV.cs" />
     <Compile Include="Helpers\Class1.cs" />
     <Compile Include="Helpers\ConsulWV.cs" />
     <Compile Include="Helpers\Jenkins.cs" />
@@ -167,6 +177,7 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\EnvMgmt\EnvBuild.cshtml" />
     <Content Include="Views\Shared\_EnvDetails.cshtml" />
+    <Content Include="Views\EnvMgmt\AppVersions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -177,6 +188,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Environment\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\AWSSDK.EC2.3.3.11.3\analyzers\dotnet\cs\AWSSDK.EC2.CodeAnalysis.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

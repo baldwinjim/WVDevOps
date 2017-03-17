@@ -7,41 +7,42 @@
 <h2>Environment Management</h2>
 <br />
 
-<div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">Environments</h3>
-        </div>
-        <div class="panel-body">
-            <table>
-                <tr>
-                    <td>
-                        <table>
-                            @if (ViewBag.ConsulResult != null)
-                            {
-                                foreach (string val in ViewBag.ConsulResult)
+<table class="table">
+    <tr>
+        <td width="20%">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Environments</h3>
+                </div>
+                <div class="panel-body">
+                    <table>
+                        <tr>
+                            <td>
+                                <table>
+                                    @if (ViewBag.ConsulResult != null)
                                     {
+                                        foreach (string val in ViewBag.ConsulResult)
+                                        {
                                     <tr>
-                                        <!-- <td class="btn btn-link">@Html.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() })</td> -->
                                         <td>@Ajax.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "envdetails", InsertionMode = InsertionMode.Replace }) </td>
                                     </tr>
-                                }
-                            }
-                            else
-                            {
-                                <tr>
-                                    <td>No environments exist!</td>
-                                </tr>
-                            }
-                            <tr>
-                                <td>@Html.ActionLink("New Environment", "AddEnv")</td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td><div id="envdetails"></div></td>
-                </tr>
-            </table>
-
-        </div>
-    </div>
-</div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <tr>
+                                        <td>No environments exist!</td>
+                                    </tr>
+                                    }
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            @Html.ActionLink("New Environment", "AddEnv", null, new { @class = "btn btn-primary btn-sm" })
+        </td>
+        <td width="60%"><div id="envdetails"></div></td>
+        <td width="20%"><div id="jobs"></div></td>
+    </tr>
+</table>

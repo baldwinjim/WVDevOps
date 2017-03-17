@@ -3,12 +3,42 @@
 @{
     ViewBag.Title = "Environment Details";
 }
-<div>
+    
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Model.name Environment Details</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table-condensed">
+            <tr>
+                <td>VPC CIDR</td>
+                <td>@Html.DisplayFor(model => model.vpc_cidr)</td>
+            </tr>
+            <tr>
+                <td>AWS Region</td>
+                <td>@Html.DisplayFor(model => model.aws_region)</td>
+            </tr>
+            <tr>
+                <td>Protected</td>
+                <td>@Html.DisplayFor(model => model.protectedEnv)</td>
+            </tr>
+            <tr>
+                <td colspan="2">@Html.ActionLink("Edit", "Edit", new { name = Model.name}, new { @class = "btn btn-default btn-sm" })
+                
+                @Html.ActionLink("Build It", "EnvBuild", new { name = Model.name }, new { @class = "btn btn-primary btn-sm" }) 
+                @Html.ActionLink("Destroy It", "EnvDelete", new { name = Model.name }, new { @class = "btn btn-danger btn-sm" })</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!--
+
     <h5>Environment Details</h5>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-           Name
+            Name
         </dt>
 
         <dd>
@@ -40,10 +70,10 @@
         </dd>
 
     </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index") |
-    @Html.ActionLink("Build It", "EnvBuild", new { name = Model.name }) |
-    @Html.ActionLink("Destroy It", "EnvDelete", new { name = Model.name })
-</p>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index") |
+        @Html.ActionLink("Build It", "EnvBuild", new { name = Model.name }) |
+        @Html.ActionLink("Destroy It", "EnvDelete", new { name = Model.name })
+    </p>
+-->

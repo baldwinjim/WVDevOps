@@ -36,6 +36,15 @@ namespace wvDevOps.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult AppVersions()
+        {
+            List<string> appVersions = new List<string>();
+            AwsWV awsClient = new AwsWV();
+            appVersions = awsClient.GetVersions("EventsAPI");
+
+            return View();
+        }
+
         public async Task<PartialViewResult> EnvDetails(string name)
         {
             Env env = new Env();
