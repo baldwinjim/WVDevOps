@@ -21,20 +21,7 @@ namespace wvDevOps.Controllers
             return View(environment);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddEnv(FormCollection formCollection)
-        {
-            Env env = new Env();
-            TryUpdateModel(env);
-            ConsulWV myconsul = new ConsulWV();
-            string path = String.Format("environments/{0}/", env.name.ToLower());
-            await myconsul.putFolder(path);
-            await myconsul.putConsul(path + "aws_region", env.aws_region);
-            await myconsul.putConsul(path + "vpc_cidr", env.vpc_cidr);
-            await myconsul.putConsul(path + "protected", env.protectedEnv.ToString());
-            await myconsul.putConsul(path + "updated", DateTime.Now.ToString("MM/dd/yyyy HH:mm"));
-            return RedirectToAction("Index");
-        }
+       
 
         public ActionResult AppVersions()
         {
@@ -92,6 +79,22 @@ namespace wvDevOps.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Index(FormCollection formCollection)
+        {
+            Env env = new Env();
+            TryUpdateModel(env);
+            ConsulWV myconsul = new ConsulWV();
+            string path = String.Format("environments/{0}/", env.name.ToLower());
+            await myconsul.putFolder(path);
+            await myconsul.putConsul(path + "aws_region", env.aws_region);
+            await myconsul.putConsul(path + "vpc_cidr", env.vpc_cidr);
+            await myconsul.putConsul(path + "protected", env.protectedEnv.ToString());
+            await myconsul.putConsul(path + "updated", DateTime.Now.ToString("MM/dd/yyyy HH:mm"));
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             ConsulWV myconsul = new ConsulWV();

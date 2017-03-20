@@ -1,4 +1,6 @@
-﻿@{
+﻿@model wvDevOps.Models.Env
+
+@{
     ViewBag.Title = "Environment Management";
 }
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -19,20 +21,20 @@
                         <tr>
                             <td>
                                 <table>
-                                    @if (ViewBag.ConsulResult != null)
+                                    @if (ViewBag.ConsulResult.Count > 0)
                                     {
                                         foreach (string val in ViewBag.ConsulResult)
                                         {
-                                    <tr>
-                                        <td>@Ajax.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "envdetails", InsertionMode = InsertionMode.Replace }) </td>
-                                    </tr>
+                                            <tr>
+                                                <td>@Ajax.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "envdetails", InsertionMode = InsertionMode.Replace }) </td>
+                                            </tr>
                                         }
                                     }
                                     else
                                     {
-                                    <tr>
-                                        <td>No environments exist!</td>
-                                    </tr>
+                                        <tr>
+                                            <td>No environments exist!</td>
+                                        </tr>
                                     }
                                 </table>
                             </td>
@@ -40,9 +42,50 @@
                     </table>
                 </div>
             </div>
-            @Html.ActionLink("New Environment", "AddEnv", null, new { @class = "btn btn-primary btn-sm" })
+            <button class="btn btn-primary btn-sm" data-target="#newEnv" data-toggle="modal" data-backdrop="static">New Environment</button>
         </td>
         <td width="60%"><div id="envdetails"></div></td>
         <td width="20%"><div id="jobs"></div></td>
     </tr>
 </table>
+<div class="modal" id="newEnv" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm())
+            {
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add New Environment</h4>
+            </div>
+            <div class="modal-body">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.name, "Name", htmlAttributes: new { @class = "control-lable" })
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vpc_cidr, "VPC CIDR", htmlAttributes: new { @class = "control-lable" })
+                        @Html.EditorFor(model => model.vpc_cidr, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("aws_region", new List<SelectListItem>
+                                    {
+                                        new SelectListItem { Text = "us-east-1", Value="us-east-1" },
+                                        new SelectListItem { Text = "us-east-2", Value="us-east-2" },
+                                        new SelectListItem { Text = "us-west-1", Value="us-west-1" },
+                                        new SelectListItem { Text = "us-west-2", Value="us-west-2" }
+                                    }, "Select AWS Region")
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("protected", "Protected", htmlAttributes: new { @class = "control-label" })
+                        @Html.CheckBoxFor(model => model.protectedEnv)
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Add" class="btn btn-primary btn-sm"/>
+                    <button class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
+                </div>
+                }
+            </div>
+        </div>
+    </div>

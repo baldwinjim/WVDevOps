@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Environment Details";
 }
-    
+
 <div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title">@Model.name Environment Details</h3>
@@ -22,12 +22,6 @@
                 <td>Protected</td>
                 <td>@Html.DisplayFor(model => model.protectedEnv)</td>
             </tr>
-            <tr>
-                <td colspan="2">@Html.ActionLink("Edit", "Edit", new { name = Model.name}, new { @class = "btn btn-default btn-sm" })
-                
-                @Html.ActionLink("Build It", "EnvBuild", new { name = Model.name }, new { @class = "btn btn-primary btn-sm" }) 
-                @Html.ActionLink("Destroy It", "EnvDelete", new { name = Model.name }, new { @class = "btn btn-danger btn-sm" })</td>
-            </tr>
-        </table>
-    </div>
+    </table>
+</div>
 </div>
