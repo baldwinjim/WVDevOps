@@ -101,7 +101,15 @@ namespace wvDevOps.Controllers
 
             var result = await myconsul.getEnvironments("environments");
 
-            ViewBag.ConsulResult = result;
+            if (result != null)
+            {
+                ViewBag.ConsulResult = result;
+            }
+            else
+            {
+                ViewBag.ConsulResult = null;
+            }
+
 
             return View();
         }

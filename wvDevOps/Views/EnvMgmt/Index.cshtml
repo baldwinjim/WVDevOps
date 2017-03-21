@@ -3,14 +3,15 @@
 @{
     ViewBag.Title = "Environment Management";
 }
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <h2>Environment Management</h2>
 <br />
 
 <table class="table">
-    <tr>
+    <tr>;
         <td width="20%">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -21,13 +22,16 @@
                         <tr>
                             <td>
                                 <table>
-                                    @if (ViewBag.ConsulResult.Count > 0)
+                                    @if (ViewBag.ConsulResult != null)
                                     {
-                                        foreach (string val in ViewBag.ConsulResult)
+                                        if (ViewBag.ConsulResult.Count > 0)
                                         {
-                                            <tr>
-                                                <td>@Ajax.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "envdetails", InsertionMode = InsertionMode.Replace }) </td>
-                                            </tr>
+                                            foreach (string val in ViewBag.ConsulResult)
+                                            {
+                                                <tr>
+                                                    <td>@Ajax.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "envdetails", InsertionMode = InsertionMode.Replace }) </td>
+                                                </tr>
+                                            }
                                         }
                                     }
                                     else
