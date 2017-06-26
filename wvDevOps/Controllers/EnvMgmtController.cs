@@ -38,9 +38,9 @@ namespace wvDevOps.Controllers
             ConsulWV myconsul = new ConsulWV();
             string path = String.Format("environments/{0}/", name.ToLower());
             env.name = name;
-            env.aws_region = await myconsul.getPair(path + "aws_region");
+            env.region = await myconsul.getPair(path + "aws_region");
             env.protectedEnv = Convert.ToBoolean(await myconsul.getPair(path + "protected"));
-            env.vpc_cidr = await myconsul.getPair(path + "vpc_cidr");
+            env.cidr = await myconsul.getPair(path + "vpc_cidr");
 
             return PartialView("_EnvDetails", env);
 
@@ -87,8 +87,8 @@ namespace wvDevOps.Controllers
             ConsulWV myconsul = new ConsulWV();
             string path = String.Format("environments/{0}/", env.name.ToLower());
             await myconsul.putFolder(path);
-            await myconsul.putConsul(path + "aws_region", env.aws_region);
-            await myconsul.putConsul(path + "vpc_cidr", env.vpc_cidr);
+            await myconsul.putConsul(path + "aws_region", env.region);
+            await myconsul.putConsul(path + "vpc_cidr", env.cidr);
             await myconsul.putConsul(path + "protected", env.protectedEnv.ToString());
             await myconsul.putConsul(path + "updated", DateTime.Now.ToString("MM/dd/yyyy HH:mm"));
             return RedirectToAction("Index");
@@ -97,20 +97,8 @@ namespace wvDevOps.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            ConsulWV myconsul = new ConsulWV();
-
-            var result = await myconsul.getEnvironments("environments");
-
-            if (result != null)
-            {
-                ViewBag.ConsulResult = result;
-            }
-            else
-            {
-                ViewBag.ConsulResult = null;
-            }
-
-
+            EnvironmentContext environmentContext = new EnvironmentContext();
+            Environment envs = environmentContext.Envs
             return View();
         }
 

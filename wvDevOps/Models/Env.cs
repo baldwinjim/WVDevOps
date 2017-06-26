@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using wvDevOps.Helpers;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace wvDevOps.Models
 {
@@ -28,14 +29,14 @@ namespace wvDevOps.Models
         public string app_lb_map { get; set; }
     }
 
+    [Table("environments")]
     public class Env
     {
+        public int id { get; set; }
         public string name { get; set; }
-        public string vpc_cidr { get; set; }
-        public string aws_region { get; set; }
+        public string cidr { get; set; }
+        public string region { get; set; }
         public bool protectedEnv { get; set; }
-        public IEnumerable<Apps> app { get; set; }
-
+        public DateTime updated { get; set; }
     }
-
 }
