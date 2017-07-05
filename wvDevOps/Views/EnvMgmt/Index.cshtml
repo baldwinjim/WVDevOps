@@ -1,4 +1,4 @@
-﻿@model wvDevOps.Models.Env
+﻿@model IEnumerable<wvDevOps.Models.Env>
 
 @{
     ViewBag.Title = "Environment Management";
@@ -24,9 +24,9 @@
                                 <table>
                                     @if (ViewBag.ConsulResult != null)
                                     {
-                                        if (ViewBag.ConsulResult.Count > 0)
+                                        if (Model.Count() > 0)
                                         {
-                                            foreach (string val in ViewBag.ConsulResult)
+                                            foreach (string val in Model)
                                             {
                                                 <tr>
                                                     <td>@Ajax.ActionLink(val.ToString(), "EnvDetails", new { name = val.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "envdetails", InsertionMode = InsertionMode.Replace }) </td>
@@ -64,12 +64,12 @@
             <div class="modal-body">
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.name, "Name", htmlAttributes: new { @class = "control-lable" })
-                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.LabelFor(model => model.Name, "Name", htmlAttributes: new { @class = "control-lable" })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.vpc_cidr, "VPC CIDR", htmlAttributes: new { @class = "control-lable" })
-                        @Html.EditorFor(model => model.vpc_cidr, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.LabelFor(model => model.Cidr, "VPC CIDR", htmlAttributes: new { @class = "control-lable" })
+                        @Html.EditorFor(model => model.Cidr, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                     <div class="form-group">
                         @Html.DropDownList("aws_region", new List<SelectListItem>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="form-group">
                         @Html.Label("protected", "Protected", htmlAttributes: new { @class = "control-label" })
-                        @Html.CheckBoxFor(model => model.protectedEnv)
+                        @Html.CheckBoxFor(model => model.ProtectedEnv)
                     </div>
                 </div>
                 <div class="modal-footer">

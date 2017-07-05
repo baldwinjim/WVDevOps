@@ -32,11 +32,11 @@ namespace wvDevOps.Models
     [Table("environments")]
     public class Env
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string cidr { get; set; }
-        public string region { get; set; }
-        public bool protectedEnv { get; set; }
-        public DateTime updated { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Cidr { get; set; }
+        public string Region { get; set; }
+        public bool ProtectedEnv { get; set; }
+        public DateTime Updated { get; set; }
     }
 }

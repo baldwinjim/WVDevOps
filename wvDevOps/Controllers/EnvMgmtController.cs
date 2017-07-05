@@ -37,10 +37,10 @@ namespace wvDevOps.Controllers
             Env env = new Env();
             ConsulWV myconsul = new ConsulWV();
             string path = String.Format("environments/{0}/", name.ToLower());
-            env.name = name;
-            env.region = await myconsul.getPair(path + "aws_region");
-            env.protectedEnv = Convert.ToBoolean(await myconsul.getPair(path + "protected"));
-            env.cidr = await myconsul.getPair(path + "vpc_cidr");
+            env.Name = name;
+            env.Region = await myconsul.getPair(path + "aws_region");
+            env.ProtectedEnv = Convert.ToBoolean(await myconsul.getPair(path + "protected"));
+            env.Cidr = await myconsul.getPair(path + "vpc_cidr");
 
             return PartialView("_EnvDetails", env);
 
@@ -85,11 +85,11 @@ namespace wvDevOps.Controllers
             Env env = new Env();
             TryUpdateModel(env);
             ConsulWV myconsul = new ConsulWV();
-            string path = String.Format("environments/{0}/", env.name.ToLower());
+            string path = String.Format("environments/{0}/", env.Name.ToLower());
             await myconsul.putFolder(path);
-            await myconsul.putConsul(path + "aws_region", env.region);
-            await myconsul.putConsul(path + "vpc_cidr", env.cidr);
-            await myconsul.putConsul(path + "protected", env.protectedEnv.ToString());
+            await myconsul.putConsul(path + "aws_region", env.Region);
+            await myconsul.putConsul(path + "vpc_cidr", env.Cidr);
+            await myconsul.putConsul(path + "protected", env.ProtectedEnv.ToString());
             await myconsul.putConsul(path + "updated", DateTime.Now.ToString("MM/dd/yyyy HH:mm"));
             return RedirectToAction("Index");
         }
@@ -98,8 +98,8 @@ namespace wvDevOps.Controllers
         public async Task<ActionResult> Index()
         {
             EnvironmentContext environmentContext = new EnvironmentContext();
-            Environment envs = environmentContext.Envs
-            return View();
+            var envs = environmentContext.Envs;
+            return View(envs);
         }
 
         public ActionResult New()
